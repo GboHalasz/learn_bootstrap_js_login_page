@@ -12,42 +12,65 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-12 col-md-6 vh-100 bg-primary-subtle">
                 <h2>Log in!</h2>
                 <span>or</span>
                 <a href="#">Please register!</a>
                 <h3>Login with e-mail and password</h3>
-                
+
                 <!-- e-mail comp -->
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="email-add1">E-mail:</span>
                     <input type="email" id="logEmail" class="form-control" placeholder="e-mail address..."
                         aria-label="Email" aria-describedby="email-add1">
                 </div>
-                
+
                 <!-- password comp -->
                 <div class="input-group mb-3">
                     <span class="input-group-text" id="password-enter1">Password:</span>
                     <input type="password" id="logPassword" class="form-control" placeholder="password..."
                         aria-label="Password" aria-describedby="password-enter1">
                 </div>
-                
+
                 <!-- loginButton comp -->
                 <button type="button" id="LogBtn" class="btn btn-primary">Login with email and password</button>
-                
+
                 <span>If you don't remember your password:</span>
                 <a href="#">Forgotten password!</a>
                 <span>or</span>
                 <h3>Login with a profile</h3>
-
-                <!-- FB button -->
-                <button type="button" id="LogBtn" class="btn btn-primary">Login with FB</button>
-                <!-- Google button -->
-                <button type="button" id="LogBtn" class="btn btn-primary">Login with Google</button>
-                <!-- GitHub button -->
-                <button type="button" id="LogBtn" class="btn btn-primary">Login with GitHub</button>
+                <div style="max-width: 220px;">
+                    <!-- FB button -->
+                    <button type="button" id="FbBtn" class="btn btn-primary btn-sm text-start p-0 mb-2"
+                        style="width: 200px;">
+                        <img src="./assets/pics/Facebook-logo-w30-circle.png" alt="facebook logo">
+                        <span class="d-inline-block text-center" style="width: calc(100% - 35px);">
+                            Sign in with Facebook
+                        </span>
+                    </button>
+                    <!-- Google button -->
+                    <button type="button" id="GooBtn" class="btn btn-primary btn-sm text-start p-0 mb-2"
+                        style="width: 200px;">
+                        <div class="d-inline-block">
+                            <img src="./assets/pics/Google__G__Logo_wb_h30.png" alt="facebook logo">
+                        </div>
+                        <span class="d-inline-block text-center" style="width: calc(100% - 35px);">
+                            Sign in with Google
+                        </span>
+                    </button>
+                    <!-- GitHub button -->
+                    <button type="button" id="GitBtn" class="btn btn-dark btn-sm text-start p-0 mb-2"
+                        style="width: 200px;">
+                        <div class="d-inline-block">
+                            <img src="./assets/pics/github-mark-white_h30.png" alt="facebook logo">
+                        </div>
+                        <span class="d-inline-block text-center" style="width: calc(100% - 35px);">
+                            Sign in with GitHub
+                        </span>
+                    </button>
+                </div>
 
 
 
