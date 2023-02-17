@@ -14,24 +14,24 @@
 <body>
     <div class="container-fluid">
         <div class="row text-center">
-            <div class="col-12 col-md-6 vh-100 bg-primary-subtle py-5">
+            <div class="col-12 col-md-6 vh-100 bg-primary-subtle py-5 overflow-auto">
                 <h2>Log in!</h2>
                 <span>or</span>
                 <a href="#">Please register!</a>
 
-                <form class="" style="max-width: 360px; margin: 0 auto;">
+                <form class="mx-auto" style="max-width: 360px;">
                     <hr>
                     <h3>Login with e-mail and password</h3>
                     <!-- e-mail comp -->
-                    <div class="input-group mb-3">
-                        <span class="input-group-text w-25" id="email-add1">E-mail:</span>
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text px-2 w-25" id="email-add1">E-mail:</span>
                         <input type="email" id="logEmail" class="form-control" placeholder="e-mail address..."
                             aria-label="Email" aria-describedby="email-add1">
                     </div>
 
                     <!-- password comp -->
-                    <div class="input-group mb-3">
-                        <span class="input-group-text w-25" id="password-enter1">Password:</span>
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text px-2 w-25" id="password-enter1">Password:</span>
                         <input type="password" id="logPassword" class="form-control" placeholder="password..."
                             aria-label="Password" aria-describedby="password-enter1">
                     </div>
@@ -82,40 +82,44 @@
 
 
             </div>
-            <div class="col-12 col-md-6 vh-100 bg-success-subtle py-4">
+            <div class="col-12 col-md-6 vh-100 bg-success-subtle py-5 overflow-auto">
                 <h2>Sign up!</h2>
-                <h3>Registration form</h3>
+                <form class="mx-auto" style="max-width: 360px;">
+                    <hr>
+                    <h3>Registration form</h3>
 
-                <!-- username text comp -->
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="username-add1">User name*:</span>
-                    <input type="text" id="regUName" class="form-control" placeholder="e-mail address..."
-                        aria-label="User name" aria-describedby="username-add1">
-                </div>
+                    <!-- username text comp -->
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text px-2 w-25" id="username-add1">User name*:</span>
+                        <input type="text" id="regUName" class="form-control" placeholder="e-mail address..."
+                            aria-label="User name" aria-describedby="username-add1">
+                    </div>
 
-                <!-- e-mail comp -->
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="email-add2">E-mail*:</span>
-                    <input type="email" id="regEmail" class="form-control" placeholder="e-mail address..."
-                        aria-label="Email" aria-describedby="email-add2">
-                </div>
+                    <!-- e-mail comp -->
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text px-2 w-25" id="email-add2">E-mail*:</span>
+                        <input type="email" id="regEmail" class="form-control" placeholder="e-mail address..."
+                            aria-label="Email" aria-describedby="email-add2">
+                    </div>
 
-                <!-- password comp -->
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="password-enter2">Password*:</span>
-                    <input type="password" id="regPass1" class="form-control" placeholder="password..."
-                        aria-label="Password" aria-describedby="password-enter2">
-                </div>
+                    <!-- password comp -->
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text px-2 w-25" id="password-enter2">Password*:</span>
+                        <input type="password" id="regPass1" class="form-control" placeholder="password..."
+                            aria-label="Password" aria-describedby="password-enter2">
+                    </div>
 
-                <!-- password comp -->
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="password-enter3">Confirm password*:</span>
-                    <input type="password" id="regPass2" class="form-control" placeholder="password..."
-                        aria-label="Password" aria-describedby="password-enter3">
-                </div>
+                    <!-- password comp -->
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text px-2" id="password-enter3">Confirm password*:</span>
+                        <input type="password" id="regPass2" class="form-control" placeholder="password..."
+                            aria-label="Password" aria-describedby="password-enter3">
+                    </div>
 
-                <!-- registrationButton comp -->
-                <button type="button" id="regBtn" class="btn btn-primary">Registration</button>
+                    <!-- registrationButton comp -->
+                    <button type="button" id="regBtn" class="btn btn-primary btn-sm disabled">Registration</button>
+                    <hr>
+                </form>
             </div>
         </div>
     </div>
