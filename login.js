@@ -12,7 +12,9 @@ const myRegForm = {
         regUName: {
             elem: document.getElementById("regUName"),
             value: "",                          //assigned on focusout                       
-            condition: this.value && (this.value.length >= 3)  //trim value before checking
+            isValid: function (val) {
+                return val && (val.length >= 3)  //trim value before checking
+            }
         },
         regEmail: {
             elem: document.getElementById("regEmail"),
@@ -33,16 +35,25 @@ const myRegForm = {
 
     regBtn: document.getElementById("regBtn"),
 
-    checkFields: function (inp) {
-        console.log(this.inpFields[inp.id].condition)
-        try {            
-            if (!inp.value.trim() /* condition */) {
+    checkField: function (inp) {
+        try {
+            inp.classList.remove("is-invalid")
+            this.inpFields[inp.id].value = "" // outsource to function 
+            const val = inp.value.trim()
+            if (!inp.value.trim()) {
+                throw new MyFormError("The field is empty! Mandatory field!")
+            }
+            console.log(this.inpFields[inp.id].isValid)
+
+            if (this.inpFields[inp.id].isValid && !this.inpFields[inp.id].isValid(val)) {
                 throw new MyFormError("The given value is ivalid!")
             }
-            this.inpFields[inp.id].value = inp.value.trim()
+            this.inpFields[inp.id].value = val; // outsource to function
         } catch (err) {
             if (err.name === "MyFormError") {
                 inp.classList.add("is-invalid")
+                console.error(`${err.name}: ${err.message}`);
+                return null;
             }
             console.error(`${err.name}: ${err.message}`);
         }
@@ -52,7 +63,7 @@ const myRegForm = {
 }
 
 myRegForm.inpFields.regUName.elem.addEventListener("focusout", function () {
-    myRegForm.checkFields(this)
+    myRegForm.setValue(myRegForm.checkField(this));
 })
 
 
