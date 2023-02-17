@@ -1,11 +1,11 @@
 /* Login - Registration page validation JS */
 
 const myRegForm = {
-    inputFields: {
-        regUname: {
+    inpFields: {
+        regUName: {
             elem: document.getElementById("regUName"),
             value: "",                          //assigned on focusout                       
-            condition: (this.value.length >= 3)  //trim value before checking
+            condition: this.value && (this.value.length >= 3)  //trim value before checking
         },
         regEmail: {
             elem: document.getElementById("regEmail"),
@@ -15,7 +15,7 @@ const myRegForm = {
         regPass1: {
             elem: document.getElementById("regEmail"),
             value: "",
-            condition: (this.value.length >= 6)
+            condition: this.value && (this.value.length >= 6)
         },
         regPass2: {
             elem: document.getElementById("regEmail"),
@@ -26,11 +26,26 @@ const myRegForm = {
 
     regBtn: document.getElementById("regBtn"),
 
-    
-
+    checkFields: function (inp) {
+        console.log(this.inpFields[inp.id].condition)
+        try {            
+            if (!inp.value.trim() /* condition */) {
+                throw new MyFormError("The given value is ivalid!")
+            }
+            this.inpFields[inp.id].value = inp.value.trim()
+        } catch (err) {
+            if (err.name === "MyFormError") {
+                inp.classList.add("is-invalid")
+            }
+            console.error(`${err.name}: ${err.message}`);
+        }
+    }
 
 
 }
 
+myRegForm.inpFields.regUName.elem.addEventListener("focusout", function () {
+    myRegForm.checkFields(this)
+})
 
 
