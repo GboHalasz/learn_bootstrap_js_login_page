@@ -1,5 +1,12 @@
 /* Login - Registration page validation JS */
 
+class MyFormError extends Error {
+    constructor(...params) {
+        super(...params);
+        this.name = "MyFormError";
+    }
+}
+
 const myRegForm = {
     inpFields: {
         regUName: {
