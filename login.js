@@ -68,7 +68,7 @@ const myRegForm = {
         }
     },
 
-    checkAllIsValid: function() {
+    checkAllValid: function() {
         try {            
             for (const key in this.inpFields) {
                 if (!this.inpFields[key].value) {
