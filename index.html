@@ -25,8 +25,8 @@
                     <!-- e-mail comp -->
                     <div class="input-group input-group-sm mb-3">
                         <span class="input-group-text px-2 w-25" id="email-add1">E-mail:</span>
-                        <input type="email" id="logEmail" class="form-control" placeholder="e-mail address..."
-                           autofocus aria-label="Email" aria-describedby="email-add1">
+                        <input type="email" id="logEmail" class="form-control" placeholder="e-mail address..." autofocus
+                            aria-label="Email" aria-describedby="email-add1">
                     </div>
 
                     <!-- password comp -->
@@ -93,6 +93,9 @@
                         <span class="input-group-text px-2 w-25" id="username-add1">User name*:</span>
                         <input type="text" id="regUName" class="form-control" placeholder="user name..."
                             aria-label="User name" aria-describedby="username-add1">
+                        <div class="invalid-feedback">
+                            "Incorrect username! The username must be at least 3 characters long!"
+                        </div>
                     </div>
 
                     <!-- e-mail comp -->
@@ -100,6 +103,9 @@
                         <span class="input-group-text px-2 w-25" id="email-add2">E-mail*:</span>
                         <input type="email" id="regEmail" class="form-control" placeholder="e-mail address..."
                             aria-label="Email" aria-describedby="email-add2">
+                        <div class="invalid-feedback">
+                            "Incorrect e-mail format!"
+                        </div>
                     </div>
 
                     <!-- password comp -->
@@ -107,6 +113,9 @@
                         <span class="input-group-text px-2 w-25" id="password-enter2">Password*:</span>
                         <input type="password" id="regPass1" class="form-control" placeholder="password..."
                             aria-label="Password" aria-describedby="password-enter2">
+                        <div class="invalid-feedback">
+                            "Incorrect password format! Password must be at least 6 characters long!"
+                        </div>
                     </div>
 
                     <!-- password comp -->
@@ -114,10 +123,15 @@
                         <span class="input-group-text px-2" id="password-enter3">Confirm password*:</span>
                         <input type="password" id="regPass2" class="form-control" placeholder="password..."
                             aria-label="Password" aria-describedby="password-enter3">
+                        <div class="invalid-feedback">
+                            "The Passwords entered do not match!"
+                        </div>
                     </div>
 
                     <!-- registrationButton comp -->
-                    <button type="button" id="regBtn" class="btn btn-primary btn-sm disabled">Registration</button>
+                    <button type="button" id="regBtn" class="btn btn-primary btn-sm disabled">
+                        Registration
+                    </button>
                     <hr>
                 </form>
             </div>
