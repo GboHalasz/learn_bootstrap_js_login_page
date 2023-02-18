@@ -74,7 +74,7 @@ const myRegForm = {
         }
     },
 
-    checkAllValid: function () {
+    valuesAreReady: function () {
         try {
             for (const key in this.inpFields) {
                 if (!this.inpFields[key].value) {
@@ -91,7 +91,7 @@ const myRegForm = {
 
 regUName.addEventListener("focusout", function () { //the bootstrap extracts the input element by Id
     myRegForm.setValueFromInp(this);
-    myRegForm.checkAllValid() ? myRegForm.enableRegBtn() : myRegForm.disableRegBtn();
+    myRegForm.valuesAreReady() ? myRegForm.enableRegBtn() : myRegForm.disableRegBtn();
 })
 
 regEmail.addEventListener("focusout", function () {
