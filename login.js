@@ -25,7 +25,7 @@ const myRegForm = {
         },
         regPass1: {
             value: "",
-            isValid: function (val) {                
+            isValid: function (val) {
                 regPass2.value = "";                     //these are for the case when  
                 myRegForm.inpFields.regPass2.value = ""  //confirm password was given first
                 return val && (val.length >= 6);
@@ -39,7 +39,13 @@ const myRegForm = {
         }
     },
 
-    regBtn: document.getElementById("regBtn"),
+    enableRegBtn: function () {
+        regBtn.classList.remove("disabled");
+    },
+
+    disableRegBtn: function () {
+        regBtn.classList.add("disabled");
+    },
 
     setValueFromInp: function (inp) {
         this.inpFields[inp.id].value = this.checkField(inp);
@@ -68,8 +74,8 @@ const myRegForm = {
         }
     },
 
-    checkAllValid: function() {
-        try {            
+    checkAllValid: function () {
+        try {
             for (const key in this.inpFields) {
                 if (!this.inpFields[key].value) {
                     return false
@@ -79,12 +85,13 @@ const myRegForm = {
         } catch (err) {
             console.error(`${err.name}: ${err.message}`);
         }
-        
+
     }
 }
 
 regUName.addEventListener("focusout", function () { //the bootstrap extracts the input element by Id
     myRegForm.setValueFromInp(this);
+    myRegForm.checkAllValid() ? myRegForm.enableRegBtn() : myRegForm.disableRegBtn();
 })
 
 regEmail.addEventListener("focusout", function () {
