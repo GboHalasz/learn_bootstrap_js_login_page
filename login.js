@@ -24,14 +24,14 @@ const myRegForm = {
             }
         },
         regPass1: {
-            elem: document.getElementById("regEmail"),
+            elem: document.getElementById("regPass1"),
             value: "",
             isValid: function (val) {
                return val && (val.length >= 6)
             }
         },
         regPass2: {
-            elem: document.getElementById("regEmail"),
+            elem: document.getElementById("regPass2"),
             value: "",
             isValid: function (val) {
                 return (val === regPass1.value)
@@ -73,15 +73,15 @@ myRegForm.inpFields.regUName.elem.addEventListener("focusout", function () {
     myRegForm.setValue(this);
 })
 
-myRegForm.inpFields.regUName.elem.addEventListener("focusout", function () {
+myRegForm.inpFields.regEmail.elem.addEventListener("focusout", function () {
     myRegForm.setValue(this);
 })
 
-myRegForm.inpFields.regUName.elem.addEventListener("focusout", function () {
+myRegForm.inpFields.regPass1.elem.addEventListener("focusout", function () {
     myRegForm.setValue(this);
 })
 
-myRegForm.inpFields.regUName.elem.addEventListener("focusout", function () {
+myRegForm.inpFields.regPass2.elem.addEventListener("focusout", function () {
     myRegForm.setValue(this);
 })
 
