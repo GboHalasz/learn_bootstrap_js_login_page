@@ -66,6 +66,20 @@ const myRegForm = {
             console.error(`${err.name}: ${err.message}`);
             return "";
         }
+    },
+
+    checkAllIsValid: function() {
+        try {            
+            for (const key in this.inpFields) {
+                if (!this.inpFields[key].value) {
+                    return false
+                }
+            }
+            return true
+        } catch (err) {
+            console.error(`${err.name}: ${err.message}`);
+        }
+        
     }
 }
 
