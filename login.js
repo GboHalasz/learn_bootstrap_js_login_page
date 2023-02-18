@@ -59,8 +59,6 @@ const myRegForm = {
             if (!inp.value.trim()) {
                 throw new MyFormError("The field is empty! Mandatory field!")
             }
-            console.log(this.inpFields[inp.id].isValid)
-
             if (this.inpFields[inp.id].isValid && !this.inpFields[inp.id].isValid(val)) {
                 throw new MyFormError("The given value is ivalid!")
             }
@@ -86,24 +84,25 @@ const myRegForm = {
             console.error(`${err.name}: ${err.message}`);
         }
 
+    },
+
+    attachListener: function (ev) {
+        try {
+            if (this.inpFields.length != 0) { 
+            for (const field in this.inpFields) {                
+                window[field].addEventListener("focusout", function () {
+                    myRegForm.setValueFromInp(this);
+                    myRegForm.valuesAreReady() ? myRegForm.enableRegBtn() : myRegForm.disableRegBtn();
+                })
+            }
+        }
+
+        } catch (err) {
+            console.error(`${err.name}: ${err.message}`);
+        }
     }
 }
 
-regUName.addEventListener("focusout", function () { //the bootstrap extracts the input element by Id
-    myRegForm.setValueFromInp(this);
-    myRegForm.valuesAreReady() ? myRegForm.enableRegBtn() : myRegForm.disableRegBtn();
-})
-
-regEmail.addEventListener("focusout", function () {
-    myRegForm.setValueFromInp(this);
-})
-
-regPass1.addEventListener("focusout", function () {
-    myRegForm.setValueFromInp(this);
-})
-
-regPass2.addEventListener("focusout", function () {
-    myRegForm.setValueFromInp(this);
-})
+myRegForm.attachListener("focusout");
 
 
