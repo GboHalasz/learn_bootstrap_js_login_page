@@ -90,7 +90,7 @@ const myRegForm = {
         try {
             if (this.inpFields.length != 0) { 
             for (const field in this.inpFields) {                
-                window[field].addEventListener("focusout", function () {
+                window[field].addEventListener(ev, function () {
                     myRegForm.setValueFromInp(this);
                     myRegForm.valuesAreReady() ? myRegForm.enableRegBtn() : myRegForm.disableRegBtn();
                 })
@@ -103,6 +103,6 @@ const myRegForm = {
     }
 }
 
-myRegForm.attachListener("focusout");
+myRegForm.attachListener("focusout");  //(better with "input")
 
 
