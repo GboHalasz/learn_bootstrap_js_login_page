@@ -9,7 +9,7 @@ class MyFormError extends Error {
 
 const myRegForm = {
     inpFields: {
-        regUName: {
+        regUName: {  //this must be equal with the id of input element!!!
             elem: document.getElementById("regUName"),
             value: "",                          //assigned on focusout                       
             isValid: function (val) {
@@ -35,10 +35,14 @@ const myRegForm = {
 
     regBtn: document.getElementById("regBtn"),
 
+    setValue: function (inp) {
+        this.inpFields[inp.id].value = this.checkField(inp);
+        console.log(this.inpFields[inp.id].value)
+    },
+
     checkField: function (inp) {
         try {
             inp.classList.remove("is-invalid")
-            this.inpFields[inp.id].value = "" // outsource to function 
             const val = inp.value.trim()
             if (!inp.value.trim()) {
                 throw new MyFormError("The field is empty! Mandatory field!")
@@ -48,22 +52,19 @@ const myRegForm = {
             if (this.inpFields[inp.id].isValid && !this.inpFields[inp.id].isValid(val)) {
                 throw new MyFormError("The given value is ivalid!")
             }
-            this.inpFields[inp.id].value = val; // outsource to function
+            return val;
         } catch (err) {
             if (err.name === "MyFormError") {
                 inp.classList.add("is-invalid")
-                console.error(`${err.name}: ${err.message}`);
-                return null;
             }
             console.error(`${err.name}: ${err.message}`);
+            return "";
         }
     }
-
-
 }
 
 myRegForm.inpFields.regUName.elem.addEventListener("focusout", function () {
-    myRegForm.setValue(myRegForm.checkField(this));
+    myRegForm.setValue(this);
 })
 
 
