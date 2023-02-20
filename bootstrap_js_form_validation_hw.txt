@@ -1,0 +1,21 @@
+[verziókezelés!]
+Bootstrap feladat megvalósítás:
+beléptető/regisztrációs felület (osztott + reszponzív)
+-belépési adatok: email,jelszó + google login + fb login + github login
+-regisztrációs adatok: név, email, jelszó (megerősítéssel)
+
+//javascript: 
+a fenti űrlap kliens oldali (regisztráció) hibakezelésének megoldása
+-név: min 3 karakter (ez nem:3db space, spaceBETUspace, ez igen: BETUspaceBETU 
+-email forma
+-jelszó min:6 karakter
+- jelszavak egyezzenek
+-a hibákat a bootstrap elemekkel írd ki 
+-egy mező ellenőrzése a mező fokuszának az elvesztésekor fusson le
+-a regisztrálok gomb csak helyes mezők esetén lehet aktív
+
+
+Regisztráljatok ingyenes mongo Atlas szolgáltatást:
+https://www.mongodb.com/cloud/atlas/register
+
+távolságokat úgy beállítani, hogy a hibaüzenetek miatt ne ugráljon a lap!!!
