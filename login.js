@@ -32,7 +32,7 @@ const myRegForm = {
             value: "",
             isValid: function (val) {
                 regPass2.value = "";                     //these are for the case when  
-                myRegForm.inpFields.regPass2.value = ""  //confirm password was given first
+                myRegForm.inpFieldsById.regPass2.value = ""  //confirm password was given first
                 return val && (val.length >= 6);
             }
         },
@@ -53,8 +53,7 @@ const myRegForm = {
     },
 
     setValueFromInp: function (inp) {
-        this.inpFields[inp.id].value = this.checkField(inp);
-        console.log(this.inpFields[inp.id].value)
+        this.inpFieldsById[inp.id].value = this.checkField(inp);
     },
 
     checkField: function (inp) {
@@ -64,7 +63,7 @@ const myRegForm = {
             if (!inp.value.trim()) {
                 throw new MyFormError("The field is empty! Mandatory field!")
             }
-            if (this.inpFields[inp.id].isValid && !this.inpFields[inp.id].isValid(val)) {
+            if (this.inpFieldsById[inp.id].isValid && !this.inpFieldsById[inp.id].isValid(val)) {
                 throw new MyFormError("The given value is ivalid!")
             }
             return val;
@@ -79,8 +78,8 @@ const myRegForm = {
 
     valuesAreReady: function () {
         try {
-            for (const key in this.inpFields) {
-                if (!this.inpFields[key].value) {
+            for (const key in this.inpFieldsById) {
+                if (!this.inpFieldsById[key].value) {
                     return false
                 }
             }
@@ -93,20 +92,20 @@ const myRegForm = {
 
     resetFields: function () {
         try {
-            for (const field in this.inpFields) {
+            for (const field in this.inpFieldsById) {
                 window[field].value = ""
             }
         } catch (err) {
-
+            console.error(`${err.name}: ${err.message}`);
         }
     },
 
     dataToJson: function () {
         let user = {};
         try {
-            for (const field in this.inpFields) {
-                if (this.inpFields[field].storageName) {
-                    user = { ...user, [this.inpFields[field].storageName]: this.inpFields[field].value }
+            for (const field in this.inpFieldsById) {
+                if (this.inpFieldsById[field].storageName) {
+                    user = { ...user, [this.inpFieldsById[field].storageName]: this.inpFieldsById[field].value }
                 }
             }
             return JSON.stringify(user);
@@ -117,8 +116,8 @@ const myRegForm = {
 
     attachListener: function (ev) {
         try {
-            if (this.inpFields.length != 0) {
-                for (const field in this.inpFields) {
+            if (this.inpFieldsById.length != 0) {
+                for (const field in this.inpFieldsById) {
                     window[field].addEventListener(ev, function () {
                         myRegForm.setValueFromInp(this);
                         myRegForm.valuesAreReady() ? myRegForm.enableRegBtn() : myRegForm.disableRegBtn();
