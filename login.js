@@ -12,12 +12,14 @@ class MyFormError extends Error {
 const myRegForm = {
     inpFields: {
         regUName: {  //this must be equal with the id of input element!!!
+            storageName: "name",  //do not add name if you don't want to store the data (pl. for confirmed password)
             value: "",                          //assigned on focusout                       
             isValid: function (val) {
                 return val && (val.length >= 3)  //trim value before checking
             }
         },
         regEmail: {
+            storageName: "email",
             value: "",
             isValid: function (val) {
                 // return (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(val)) //from w3resource
@@ -26,6 +28,7 @@ const myRegForm = {
             }
         },
         regPass1: {
+            storageName: "password",
             value: "",
             isValid: function (val) {
                 regPass2.value = "";                     //these are for the case when  
@@ -88,6 +91,31 @@ const myRegForm = {
 
     },
 
+    resetFields: function () {
+        try {
+            for (const field in this.inpFields) {
+                window[field].value = ""
+            }
+        } catch (err) {
+
+        }
+    },
+
+    dataToJson: function () {
+        let user = {};
+        try {
+            for (const field in this.inpFields) {
+
+                if (this.inpFields[field].storageName) {
+                    user = { ...user, [this.inpFields[field].storageName]: this.inpFields[field].value }
+                }
+            }            
+            return JSON.stringify(user);
+        } catch (err) {
+            console.error(`${err.name}: ${err.message}`);
+        }
+    },
+
     attachListener: function (ev) {
         try {
             if (this.inpFields.length != 0) {
@@ -102,9 +130,32 @@ const myRegForm = {
         } catch (err) {
             console.error(`${err.name}: ${err.message}`);
         }
+    },
+
+    welcome: function () {
+        let user = JSON.parse(sessionStorage.getItem("user"));
+        if (user) {
+            
+            let welcText = document.createTextNode(`Logged in user: ${user.name}`)
+
+            let welcElem = document.getElementById("welcomeText");
+            
+            if(welcElem.firstChild){
+            welcElem.removeChild(welcElem.firstChild)
+            }
+            
+            welcElem.appendChild(welcText);
+            welcElem.classList.remove("d-none");
+            welcElem.classList.add("d-block");
+        }
     }
 }
-
+myRegForm.welcome();
 myRegForm.attachListener("focusout");  //(better with "input")
-
+regBtn.addEventListener("click", function () {
+    sessionStorage.setItem("user", myRegForm.dataToJson());
+    myRegForm.welcome();
+    myRegForm.resetFields();
+}
+)
 
