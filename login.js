@@ -10,7 +10,7 @@ class MyFormError extends Error {
 }
 
 const myRegForm = {
-    inpFields: {
+    inpFieldsById: {
         regUName: {  //this must be equal with the id of input element!!!
             storageName: "name",  //do not add name if you don't want to store the data (pl. for confirmed password)
             value: "",                          //assigned on focusout                       
@@ -105,11 +105,10 @@ const myRegForm = {
         let user = {};
         try {
             for (const field in this.inpFields) {
-
                 if (this.inpFields[field].storageName) {
                     user = { ...user, [this.inpFields[field].storageName]: this.inpFields[field].value }
                 }
-            }            
+            }
             return JSON.stringify(user);
         } catch (err) {
             console.error(`${err.name}: ${err.message}`);
@@ -135,15 +134,15 @@ const myRegForm = {
     welcome: function () {
         let user = JSON.parse(sessionStorage.getItem("user"));
         if (user) {
-            
+
             let welcText = document.createTextNode(`Logged in user: ${user.name}`)
 
             let welcElem = document.getElementById("welcomeText");
-            
-            if(welcElem.firstChild){
-            welcElem.removeChild(welcElem.firstChild)
+
+            if (welcElem.firstChild) {
+                welcElem.removeChild(welcElem.firstChild)
             }
-            
+
             welcElem.appendChild(welcText);
             welcElem.classList.remove("d-none");
             welcElem.classList.add("d-block");
