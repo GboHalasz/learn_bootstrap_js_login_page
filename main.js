@@ -5,9 +5,7 @@ import { myWelcome } from "./welcome.js"
 user.setNameFromSessionStorage()
 myWelcome.show("Welcome, ", welcomePlace, user.name);
 
-myRegForm.addListenerToFields("focusout");  //(better with "input")
-
-myRegForm.addListenerToRegBtn(() => {
+myRegForm.startValidation(() => {
     user.setNameFromSessionStorage();
     myWelcome.show("Welcome, ", welcomePlace, user.name);
 });

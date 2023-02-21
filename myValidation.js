@@ -151,9 +151,11 @@ export const myRegForm = {
             myRegForm.resetFields();
             cfn()
         })
-
-
-
         return cfn;
+    },
+
+    startValidation: function (cfn) {
+        this.addListenerToFields();
+        this.addListenerToRegBtn(cfn);
     }
 }
