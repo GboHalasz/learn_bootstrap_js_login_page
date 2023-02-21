@@ -1,8 +1,12 @@
 
-export const user = {
-    name: "",
-
-    setNameFromSessionStorage: function () {
-        this.name = JSON.parse(sessionStorage.getItem("user")) ? JSON.parse(sessionStorage.getItem("user")).name : "";
+export const userData = () => {
+    const user = {
+        name: ""
     }
+
+    const setNameFromSessionStorage = () => {
+        user.name = JSON.parse(sessionStorage.getItem("user")) ? JSON.parse(sessionStorage.getItem("user")).name : "";
+    }
+
+    return { setUserNameFromSessionStorage: setNameFromSessionStorage, user }
 }

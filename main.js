@@ -1,11 +1,17 @@
-import { myRegForm } from "./myValidation.js";
-import { user } from "./user.js";
+import { regValidation } from "./myValidation.js";
+import { storeData } from "./storeData.js";
+import { userData } from "./user.js";
 import { myWelcome } from "./welcome.js"
 
-user.setNameFromSessionStorage()
+const { startVal, validData } = regValidation();
+const { storeInSessionStr } = storeData();
+const { user, setUserNameFromSessionStorage } = userData();
+
+setUserNameFromSessionStorage()
 myWelcome.show("Welcome, ", welcomePlace, user.name);
 
-myRegForm.startValidation(() => {
-    user.setNameFromSessionStorage();
+startVal("blur", () => {
+    storeInSessionStr("user", validData());
+    setUserNameFromSessionStorage();
     myWelcome.show("Welcome, ", welcomePlace, user.name);
 });
