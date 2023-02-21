@@ -1,7 +1,6 @@
 /* Login - Registration page validation JS */
 
 //the browser extracts the input element by id!!
-
 class MyFormError extends Error {
     constructor(...params) {
         super(...params);
@@ -9,7 +8,7 @@ class MyFormError extends Error {
     }
 }
 
-const myRegForm = {
+export const myRegForm = {
     inpFieldsById: {
         regUName: {  //this must be equal with the id of input element!!!
             storageName: "name",  //do not add name if you don't want to store the data (pl. for confirmed password)
@@ -158,39 +157,3 @@ const myRegForm = {
         return cfn;
     }
 }
-
-const myWelcome = {
-
-    show: function (welcomeText, welcomePlace, userName) {
-        if (userName) {
-            let textNode = document.createTextNode(`${welcomeText}${userName}`)
-
-            if (welcomePlace.firstChild) {
-                welcomePlace.removeChild(welcomePlace.firstChild)
-            }
-
-            welcomePlace.appendChild(textNode);
-            welcomePlace.classList.remove("d-none");
-            welcomePlace.classList.add("d-block");
-        }
-    }
-}
-
-const user = {
-    name: "",
-
-    setNameFromSessionStorage: function () {
-        this.name = JSON.parse(sessionStorage.getItem("user")) ? JSON.parse(sessionStorage.getItem("user")).name : "";
-    }
-}
-
-
-user.setNameFromSessionStorage()
-myWelcome.show("Welcome, ", welcomePlace, user.name);
-
-myRegForm.addListenerToFields("focusout");  //(better with "input")
-
-myRegForm.addListenerToRegBtn(() => {
-    user.setNameFromSessionStorage();
-    myWelcome.show("Welcome, ", welcomePlace, user.name);
-});
