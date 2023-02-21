@@ -13,11 +13,11 @@
 
 <body>
     <div class="container-fluid">
-        
+
         <div class="row text-center">
-            <div id="welcomePlace" class="d-none"></div>               
+            <div id="welcomePlace" class="d-none"></div>
             <div id="signinup" class="col-12 col-md-6 vh-100 bg-primary-subtle py-5 overflow-auto">
-                
+
                 <h2>Log in!</h2>
                 <span>or</span>
                 <a href="#regUName">Please register!</a>
@@ -50,42 +50,26 @@
 
                     <hr>
                     <span>or</span>
-                    <h3>Login with a profile:</h3>
+                    <h3 class="mb-4">Login with a profile:</h3>
                     <div class="d-inline-block" style="max-width: 220px;">
                         <!-- FB button -->
-                        <button type="button" id="FbBtn" class="btn btn-primary btn-sm text-start p-0 mb-2"
-                            style="width: 220px;">
+                        <button type="button" id="FbBtn" class="btn btn-primary btn-sm rounded-circle text-start p-1 mx-3 mb-3">
                             <img src="./assets/pics/Facebook-logo-w30-circle.png" alt="facebook logo">
-                            <span class="d-inline-block text-center" style="width: calc(100% - 35px);">
-                                Sign in with Facebook
-                            </span>
                         </button>
                         <!-- Google button -->
-                        <button type="button" id="GooBtn" class="btn btn-primary btn-sm text-start p-0 mb-2"
-                            style="width: 220px;">
-                            <div class="d-inline-block">
-                                <img src="./assets/pics/Google__G__Logo_wb_h30.png" alt="facebook logo">
-                            </div>
-                            <span class="d-inline-block text-center" style="width: calc(100% - 35px);">
-                                Sign in with Google
-                            </span>
+                        <button type="button" id="GooBtn" class="btn btn-primary btn-sm rounded-circle text-start p-1 mx-3 mb-3">
+                            <img src="./assets/pics/Google__G__Logo_wb_h30.png" alt="facebook logo">
                         </button>
                         <!-- GitHub button -->
-                        <button type="button" id="GitBtn" class="btn btn-dark btn-sm text-start p-0 mb-2"
-                            style="width: 220px;">
-                            <div class="d-inline-block">
-                                <img src="./assets/pics/github-mark-white_h30.png" alt="facebook logo">
-                            </div>
-                            <span class="d-inline-block text-center" style="width: calc(100% - 35px);">
-                                Sign in with GitHub
-                            </span>
+                        <button type="button" id="GitBtn" class="btn btn-dark btn-sm rounded-circle text-start p-1 mx-3 mb-3">
+                            <img src="./assets/pics/github-mark-white_h30.png" alt="facebook logo">
                         </button>
                     </div>
                 </form>
 
 
             </div>
-            <div class="col-12 col-md-6 vh-100 bg-success-subtle py-5 overflow-auto">                
+            <div class="col-12 col-md-6 vh-100 bg-success-subtle py-5 overflow-auto">
                 <h2>Sign up!</h2>
                 <form class="mx-auto" style="max-width: 360px;">
                     <hr>
@@ -93,40 +77,40 @@
 
                     <!-- username text comp -->
                     <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text px-2 w-25" id="username-add1">User name*:</span>
+                        <span class="input-group-text px-2 w-25" id="username-add1">User name*</span>
                         <input type="text" id="regUName" class="form-control" placeholder="user name..."
                             aria-label="User name" aria-describedby="username-add1">
-                        <div class="invalid-feedback">
+                        <div id="regUNameWarn" class="w-100 invisible text-danger lh-1" style="height: 2.1rem;">
                             "Mandatory field! The username must be at least 3 characters long!"
                         </div>
                     </div>
 
                     <!-- e-mail comp -->
                     <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text px-2 w-25" id="email-add2">E-mail*:</span>
-                        <input type="email" id="regEmail" class="form-control" placeholder="e-mail address..."
+                        <span class="input-group-text px-2 w-25 " id="email-add2">E-mail*</span>
+                        <input type="email" id="regEmail" class="form-control " placeholder="e-mail address..."
                             aria-label="Email" aria-describedby="email-add2">
-                        <div class="invalid-feedback">
+                        <div id="regEmailWarn" class="w-100 invisible text-danger lh-1" style="height: 2.1rem;">
                             "Incorrect e-mail format!"
                         </div>
                     </div>
 
                     <!-- password comp -->
                     <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text px-2 w-25" id="password-enter2">Password*:</span>
+                        <span class="input-group-text px-2 w-25" id="password-enter2">Password*</span>
                         <input type="password" id="regPass1" class="form-control" placeholder="password..."
                             aria-label="Password" aria-describedby="password-enter2">
-                        <div class="invalid-feedback">
+                        <div id="regPass1Warn" class="w-100 invisible text-danger lh-1" style="height: 2.1rem;">
                             "Incorrect password format! Password must be at least 6 characters long!"
                         </div>
                     </div>
 
                     <!-- password comp -->
                     <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text px-2" id="password-enter3">Confirm password*:</span>
+                        <span class="input-group-text px-2" id="password-enter3">Confirm password*</span>
                         <input type="password" id="regPass2" class="form-control" placeholder="password..."
                             aria-label="Password" aria-describedby="password-enter3">
-                        <div class="invalid-feedback">
+                        <div id="regPass2Warn" class="w-100 invisible text-danger lh-1" style="height: 2.1rem;">
                             "The Passwords entered do not match!"
                         </div>
                     </div>

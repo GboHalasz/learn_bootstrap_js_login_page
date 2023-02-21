@@ -65,9 +65,19 @@ export const regValidation = function () {
             this.inpFieldsById[inp.id].value = this.checkField(inp);
         },
 
+        showWarnText: function (inp) {
+            inp.classList.add("is-invalid")
+            window[inp.id + "Warn"].classList.remove("invisible")
+        },
+
+        hideWarnText: function (inp) {
+            inp.classList.remove("is-invalid");
+            window[inp.id + "Warn"].classList.add("invisible")
+        },
+
         checkField: function (inp) {
             try {
-                inp.classList.remove("is-invalid")
+                this.hideWarnText(inp);
                 const val = inp.value.trim()
                 if (!inp.value.trim()) {
                     throw new MyFormError("The field is empty! Mandatory field!")
@@ -78,7 +88,7 @@ export const regValidation = function () {
                 return val;
             } catch (err) {
                 if (err.name === "MyFormError") {
-                    inp.classList.add("is-invalid")
+                    this.showWarnText(inp);
                 }
                 console.error(`${err.name}: ${err.message}`);
                 return "";
@@ -152,7 +162,7 @@ export const regValidation = function () {
         addListenerToRegBtn: function (cfn) {
             regBtn.addEventListener("click", function () {
                 cfn();
-                myRegForm.resetFields();                
+                myRegForm.resetFields();
                 myRegForm.resetValues();
                 myRegForm.disableRegBtn();
             })
