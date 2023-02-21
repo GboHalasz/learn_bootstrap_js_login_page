@@ -52,7 +52,17 @@ const myRegForm = {
         regBtn.classList.add("disabled");
     },
 
-    setValueFromInp: function (inp) {
+    sha512: async function (str) {
+        return crypto.subtle.digest("SHA-512", new TextEncoder("utf-8").encode(str)).then(buf => {
+            return Array.prototype.map.call(new Uint8Array(buf), x => (('00' + x.toString(16)).slice(-2))).join('');
+        });
+    },
+
+    setValueFromInp: async function (inp) {
+        if (inp.type == "password") {
+            await this.sha512(this.checkField(inp)).then(x => { this.inpFieldsById[inp.id].value = x });
+            return
+        }
         this.inpFieldsById[inp.id].value = this.checkField(inp);
     },
 
@@ -95,6 +105,7 @@ const myRegForm = {
             for (const field in this.inpFieldsById) {
                 window[field].value = ""
             }
+            this.disableRegBtn()
         } catch (err) {
             console.error(`${err.name}: ${err.message}`);
         }
@@ -114,12 +125,17 @@ const myRegForm = {
         }
     },
 
-    attachListener: function (ev) {
+    storageData: function () {
+        console.log(this.dataToJson());
+        sessionStorage.setItem("user", this.dataToJson());
+    },
+
+    addListenerToFields: function (ev) {
         try {
             if (this.inpFieldsById.length != 0) {
                 for (const field in this.inpFieldsById) {
-                    window[field].addEventListener(ev, function () {
-                        myRegForm.setValueFromInp(this);
+                    window[field].addEventListener(ev, async function () {
+                        await myRegForm.setValueFromInp(this);
                         myRegForm.valuesAreReady() ? myRegForm.enableRegBtn() : myRegForm.disableRegBtn();
                     })
                 }
@@ -130,30 +146,51 @@ const myRegForm = {
         }
     },
 
-    welcome: function () {
-        let user = JSON.parse(sessionStorage.getItem("user"));
-        if (user) {
+    addListenerToRegBtn: function (cfn) {
+        regBtn.addEventListener("click", function () {
+            myRegForm.storageData();
+            myRegForm.resetFields();
+            cfn()
+        })
 
-            let welcText = document.createTextNode(`Logged in user: ${user.name}`)
 
-            let welcElem = document.getElementById("welcomeText");
 
-            if (welcElem.firstChild) {
-                welcElem.removeChild(welcElem.firstChild)
+        return cfn;
+    }
+}
+
+const myWelcome = {
+
+    show: function (welcomeText, welcomePlace, userName) {
+        if (userName) {
+            let textNode = document.createTextNode(`${welcomeText}${userName}`)
+
+            if (welcomePlace.firstChild) {
+                welcomePlace.removeChild(welcomePlace.firstChild)
             }
 
-            welcElem.appendChild(welcText);
-            welcElem.classList.remove("d-none");
-            welcElem.classList.add("d-block");
+            welcomePlace.appendChild(textNode);
+            welcomePlace.classList.remove("d-none");
+            welcomePlace.classList.add("d-block");
         }
     }
 }
-myRegForm.welcome();
-myRegForm.attachListener("focusout");  //(better with "input")
-regBtn.addEventListener("click", function () {
-    sessionStorage.setItem("user", myRegForm.dataToJson());
-    myRegForm.welcome();
-    myRegForm.resetFields();
-}
-)
 
+const user = {
+    name: "",
+
+    setNameFromSessionStorage: function () {
+        this.name = JSON.parse(sessionStorage.getItem("user")) ? JSON.parse(sessionStorage.getItem("user")).name : "";
+    }
+}
+
+
+user.setNameFromSessionStorage()
+myWelcome.show("Welcome, ", welcomePlace, user.name);
+
+myRegForm.addListenerToFields("focusout");  //(better with "input")
+
+myRegForm.addListenerToRegBtn(() => {
+    user.setNameFromSessionStorage();
+    myWelcome.show("Welcome, ", welcomePlace, user.name);
+});
