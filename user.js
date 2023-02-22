@@ -1,12 +1,17 @@
 
-export const userData = () => {
+export const userData = (storageArea) => {
     const user = {
-        name: ""
-    }
+        
+        setUserName: function (){
+            this.name = JSON.parse(storageArea.getItem("user")) ? JSON.parse(storageArea.getItem("user")).name : "";
+        }
+    };
 
-    const setNameFromSessionStorage = () => {
-        user.name = JSON.parse(sessionStorage.getItem("user")) ? JSON.parse(sessionStorage.getItem("user")).name : "";
-    }
-
-    return { setUserNameFromSessionStorage: setNameFromSessionStorage, user }
+    user.setUserName();
+        
+    window.addEventListener("storeData", function () {
+        user.setUserName();        
+    });
+    
+    return { user };
 }

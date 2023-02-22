@@ -1,8 +1,15 @@
-export const storeData = () => {
+export const storeData = (storageArea) => {
+const event = new Event("storeData")
 
-    const storeInSessionStorage = (key, jSonData) => {        
-        sessionStorage.setItem(key, jSonData);
+    const storeInStorage = (key, jSonData) => {        
+        storageArea.setItem(key, jSonData);
+        window.dispatchEvent(event);
     }
 
-    return {storeInSessionStr: storeInSessionStorage}
+    const removeFromStorage = (key) => {
+        storageArea.removeItem(key);
+        window.dispatchEvent(event);
+    }
+
+    return {storeInStorage, removeFromStorage}
 }
