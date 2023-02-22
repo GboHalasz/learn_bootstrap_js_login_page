@@ -4,14 +4,12 @@ import { userData } from "./user.js";
 import { myWelcome } from "./welcome.js"
 
 const { startVal, validData } = regValidation();
-const { storeInSessionStr } = storeData();
-const { user, setUserNameFromSessionStorage } = userData();
+const { storeInStorage, removeFromStorage } = storeData(sessionStorage);
+const { user } = userData(sessionStorage);
 
-setUserNameFromSessionStorage()
 myWelcome.show("Welcome, ", welcomePlace, user.name);
 
 startVal("blur", () => {
-    storeInSessionStr("user", validData());
-    setUserNameFromSessionStorage();
+    storeInStorage("user", validData());     
     myWelcome.show("Welcome, ", welcomePlace, user.name);
 });
