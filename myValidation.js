@@ -40,6 +40,18 @@ export const regValidation = function () {
                 isValid: function (val) {
                     return (val === regPass1.value)
                 }
+            },
+            logEmail: {
+                value: "",
+                isValid: function (val) {
+                    return val ? true : false
+                }
+            },
+            logPassword: {
+                value: "",
+                isValid: function (val) {
+                    return val ? true : false
+                }
             }
         },
 
@@ -58,26 +70,40 @@ export const regValidation = function () {
         },
 
         setValueFromInp: async function (inp) {
-            if (inp.type == "password") {
-                await this.sha512(this.checkField(inp)).then(x => { this.inpFieldsById[inp.id].value = x });
+               let validData = this.checkField(inp);       
+            if (inp.type == "password" && validData) {
+                await this.sha512(validData).then(x => { this.inpFieldsById[inp.id].value = x });
+                validData = "";
                 return
             }
-            this.inpFieldsById[inp.id].value = this.checkField(inp);
+            this.inpFieldsById[inp.id].value = validData;
         },
 
         showWarnText: function (inp) {
             inp.classList.add("is-invalid")
-            window[inp.id + "Warn"].classList.remove("invisible")
+            if (inp.id === "logEmail" || inp.id === "logPassword") {
+                if (window.logEmail.value === "" || window.logPassword.value === "") {
+                    window.logWarn.classList.remove("invisible")
+                }
+            } else {
+                window[inp.id + "Warn"].classList.remove("invisible")
+            }
         },
 
         hideWarnText: function (inp) {
             inp.classList.remove("is-invalid");
-            window[inp.id + "Warn"].classList.add("invisible")
+            if (inp.id === "logEmail" || inp.id === "logPassword") {                
+                if (window.logEmail.value !== "" && window.logPassword.value !== "") {
+                    window.logWarn.classList.add("invisible")
+                }
+            } else {
+                window[inp.id + "Warn"].classList.add("invisible")
+            }
         },
 
         checkField: function (inp) {
             try {
-                this.hideWarnText(inp);
+                this.hideWarnText(inp);                
                 const val = inp.value.trim()
                 if (!inp.value.trim()) {
                     throw new MyFormError("The field is empty! Mandatory field!")
@@ -88,17 +114,17 @@ export const regValidation = function () {
                 return val;
             } catch (err) {
                 if (err.name === "MyFormError") {
-                    this.showWarnText(inp);
+                    this.showWarnText(inp);                    
                 }
                 console.error(`${err.name}: ${err.message}`);
                 return "";
             }
         },
 
-        valuesAreReady: function () {
+        regValuesAreReady: function () {
             try {
                 for (const key in this.inpFieldsById) {
-                    if (!this.inpFieldsById[key].value) {
+                    if (key.includes("reg") && !this.inpFieldsById[key].value) {
                         return false
                     }
                 }
@@ -134,8 +160,8 @@ export const regValidation = function () {
                 if (this.inpFieldsById.length != 0) {
                     for (const field in this.inpFieldsById) {
                         window[field].addEventListener(ev, async function () {
-                            await myRegForm.setValueFromInp(this);
-                            myRegForm.valuesAreReady() ? myRegForm.enableRegBtn() : myRegForm.disableRegBtn();
+                            await myRegForm.setValueFromInp(this);                            
+                            myRegForm.regValuesAreReady() ? myRegForm.enableRegBtn() : myRegForm.disableRegBtn();
                         })
                     }
                 }
@@ -164,7 +190,7 @@ export const regValidation = function () {
                 cfn();
                 myRegForm.resetFields();
                 myRegForm.resetValues();
-                myRegForm.disableRegBtn();
+                myRegForm.disableRegBtn();                
             })
             return cfn;
         },
