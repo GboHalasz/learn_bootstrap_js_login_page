@@ -1,3 +1,4 @@
+// TODO: make a logout button
 export const myWelcome = {
 
     show: function (welcomeText, welcomePlace, userName) {
