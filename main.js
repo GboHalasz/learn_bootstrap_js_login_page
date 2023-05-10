@@ -4,7 +4,7 @@ import { userData } from "./user.js";
 import { myWelcome } from "./welcome.js"
 
 const { startVal, validData } = regValidation();
-const { storeInStorage, removeFromStorage } = storeData(sessionStorage);
+const { storeInStorage } = storeData(sessionStorage);
 const { user } = userData(sessionStorage);
 
 myWelcome.show("Welcome, ", welcomePlace, user.name);
