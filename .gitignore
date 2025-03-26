@@ -1,0 +1,46 @@
+# Node modulok kizárása
+node_modules/
+
+# Build és output könyvtárak
+dist/
+build/
+dist
+dist-ssr
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+
+# Env or Local files
+.env
+.env.*    # Érzékeny adatokat tartalmazó fájlok, kivéve ha van .env.example
+*.local
+
+# Test coverage reports
+coverage/
+
+# Temp or cache maps
+tmp/
+.cache/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE, editor files
+.vscode/
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
