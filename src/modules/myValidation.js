@@ -11,7 +11,7 @@ export const regValidation = function () {
     const myRegForm = {
         inpFieldsById: {
             regUName: {  //this must be equal with the id of input element!!!
-                storageName: "name",  //do not add name if you don't want to store the data (pl. for confirmed password)
+                storageName: "name",  //do not add name if you don't want to store the data (fe. for confirmed password)
                 value: "",                          //assigned on focusout                       
                 isValid: function (val) {
                     return val && (val.length >= 3)  //trim value before checking

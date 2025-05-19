@@ -9,7 +9,7 @@ const isDevelopment = process.env.NODE_ENV !== "production";
 module.exports = {
     mode: isDevelopment ? "development" : "production",
     devtool: isDevelopment ? "inline-source-map" : false,
-    entry: './main.js',
+    entry: './src/main.js',
     output: {
         filename: isDevelopment ? '[name].bundle.js' : '[name].[contenthash].bundle.js',
         path: path.resolve(__dirname, 'dist'),
@@ -59,7 +59,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: './index.html',
+            template: './src/index.html',
         }),
         !isDevelopment &&
         new MiniCssExtractPlugin({

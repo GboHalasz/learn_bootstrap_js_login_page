@@ -1,7 +1,7 @@
-import { regValidation } from "./myValidation.js";
-import { storeData } from "./storeData.js";
-import { userData } from "./user.js";
-import { myWelcome } from "./welcome.js"
+import { regValidation } from "./modules/myValidation.js";
+import { storeData } from "./modules/storeData.js";
+import { userData } from "./modules/user.js";
+import { myWelcome } from "./modules/welcome.js"
 
 const { startVal, validData } = regValidation();
 const { storeInStorage } = storeData(sessionStorage);
