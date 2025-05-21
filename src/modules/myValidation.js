@@ -157,7 +157,7 @@ export const regValidation = function () {
 
         addListenerToFields: function (ev) {
             try {
-                if (this.inpFieldsById.length != 0) {
+                if (Object.keys(this.inpFieldsById).length !== 0) {
                     for (const field in this.inpFieldsById) {
                         window[field].addEventListener(ev, async function () {
                             await myRegForm.setValueFromInp(this);                            
@@ -201,5 +201,5 @@ export const regValidation = function () {
         }
     }
 
-    return { startVal: myRegForm.startValidation, validData: myRegForm.dataToJson }
+    return myRegForm
 }

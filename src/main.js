@@ -3,13 +3,13 @@ import { storeData } from "./modules/storeData.js";
 import { userData } from "./modules/user.js";
 import { myWelcome } from "./modules/welcome.js"
 
-const { startVal, validData } = regValidation();
+const myRegForm = regValidation();
 const { storeInStorage } = storeData(sessionStorage);
 const { user } = userData(sessionStorage);
 
 myWelcome.show("Welcome, ", welcomePlace, user.name);
 
-startVal("blur", () => {
-    storeInStorage("user", validData());     
+myRegForm.startValidation("blur", () => {
+    storeInStorage("user", myRegForm.dataToJson());
     myWelcome.show("Welcome, ", welcomePlace, user.name);
 });
