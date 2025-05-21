@@ -21,7 +21,6 @@ describe('myWelcome.show', () => {
 
         myWelcome.show(welcomeText, welcomePlace, userName);
 
-        // Check that welcomePlace has correct text
         expect(welcomePlace.textContent).toBe('Hello, Alice');
 
         // Check classes
@@ -30,7 +29,7 @@ describe('myWelcome.show', () => {
     });
 
     it('should replace existing text node if it exists', () => {
-        // Add initial text node
+
         const oldText = document.createTextNode('Old Text');
         welcomePlace.appendChild(oldText);
 

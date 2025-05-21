@@ -34,7 +34,6 @@ describe("userData", () => {
         const { user } = userData(storageMock);
         expect(user.name).toBe("Alice");
 
-        // storeData esemény kiváltása
         window.dispatchEvent(new Event("storeData"));
 
         expect(user.name).toBe("Bob");
