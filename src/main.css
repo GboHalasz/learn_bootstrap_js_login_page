@@ -1,0 +1,8 @@
+.btn-primary.disabled,
+.btn-primary:disabled {
+    opacity: 1;
+    background-color: #0d6efd;
+    color: #ffffff !important;
+    cursor: not-allowed;
+    filter: grayscale(40%);
+}

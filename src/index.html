@@ -8,131 +8,202 @@
     <meta name="author" content="Gabor Halasz">
     <title>LoginPage</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
 
 <body>
-    <div class="container-fluid">
+<main class="container-fluid">
+    <div class="row text-center">
+        <div id="welcomePlace" class="d-none"></div>
+        <h1 class="visually-hidden">Welcome to Login and Registration</h1>
+        <section aria-labelledby="loginSection" class="col-12 col-md-6 vh-100 bg-primary-subtle pt-5 overflow-auto">
+            <h2 id="loginSection">Log in!</h2>
+            <span>or</span>
+            <a href="#regUName">Please register!</a>
 
-        <div class="row text-center">
-            <div id="welcomePlace" class="d-none"></div>
-            <div id="signinup" class="col-12 col-md-6 vh-100 bg-primary-subtle pt-5 overflow-auto">
+            <form class="mx-auto" style="max-width: 360px;">
+                <hr>
+                <h3 class="mb-4">Login with e-mail and password</h3>
+                <!-- e-mail comp -->
+                <div class="input-group input-group-sm mb-3">
+                    <label class="input-group-text px-2 w-25" id="email-add1" for="logEmail">E-mail:</label>
+                    <input type="email"
+                           name="login-email"
+                           id="logEmail"
+                           class="form-control"
+                           placeholder="e.g. name@example.com"
+                           aria-label="Email address (for login)"
+                           aria-describedby="email-add1 logWarn"
+                           required
+                    >
+                </div>
 
-                <h2>Log in!</h2>
+                <!-- password comp -->
+                <div class="input-group input-group-sm mb-3">
+                    <label class="input-group-text px-2 w-25" id="password-enter1" for="logPassword">Password:</label>
+                    <input type="password"
+                           name="login-password"
+                           id="logPassword"
+                           class="form-control"
+                           placeholder="At least 6 characters"
+                           aria-label="Password (for login)"
+                           aria-describedby="password-enter1 logWarn"
+                           required
+                    >
+                    <div id="logWarn"
+                         class="w-100 invisible text-danger lh-1"
+                         style="height: 2.1rem;"
+                         aria-live="assertive"
+                    >Password or email is missing or incorrect!
+                    </div>
+                </div>
+
+                <!-- loginButton comp -->
+                <button type="button" id="LogBtn" class="btn btn-primary btn-sm mb-3">Login with email and password
+                </button>
+
+                <div>
+                    <span>If you don't remember your password:</span>
+                </div>
+                <a href="#">Forgotten password!</a>
+
+                <hr>
                 <span>or</span>
-                <a href="#regUName">Please register!</a>
-
-                <form class="mx-auto" style="max-width: 360px;">
-                    <hr>
-                    <h3 class="mb-4">Login with e-mail and password</h3>
-                    <!-- e-mail comp -->
-                    <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text px-2 w-25" id="email-add1">E-mail:</span>
-                        <input type="email" id="logEmail" class="form-control" placeholder="e-mail address..."
-                            aria-label="Email" aria-describedby="email-add1">
-                    </div>
-
-                    <!-- password comp -->
-                    <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text px-2 w-25" id="password-enter1">Password:</span>
-                        <input type="password" id="logPassword" class="form-control" placeholder="password..."
-                            aria-label="Password" aria-describedby="password-enter1">
-                        <div id="logWarn" class="w-100 invisible text-danger lh-1" style="height: 2.1rem;">
-                            "Password or email is missing or incorrect!"
-                        </div>
-                    </div>
-
-                    <!-- loginButton comp -->
-                    <button type="button" id="LogBtn" class="btn btn-primary btn-sm mb-3">Login with email and
-                        password</button>
-
-                    <div>
-                        <span>If you don't remember your password:</span>
-                    </div>
-                    <a href="#">Forgotten password!</a>
-
-                    <hr>
-                    <span>or</span>
-                    <h3 class="mb-4">Login with a profile:</h3>
-                    <div class="d-inline-block" style="max-width: 220px;">
-                        <!-- FB button -->
-                        <button type="button" id="FbBtn"
-                            class="btn btn-primary btn-sm rounded-circle text-start p-1 mx-3 mb-3">
-                            <img src="./assets/pics/Facebook-logo-w30-circle.png" alt="Facebook logo">
-                        </button>
-                        <!-- Google button -->
-                        <button type="button" id="GooBtn"
-                            class="btn btn-primary btn-sm rounded-circle text-start p-1 mx-3 mb-3">
-                            <img src="./assets/pics/Google__G__Logo_wb_h30.png" alt="Google logo">
-                        </button>
-                        <!-- GitHub button -->
-                        <button type="button" id="GitBtn"
-                            class="btn btn-dark btn-sm rounded-circle text-start p-1 mx-3 mb-3">
-                            <img src="./assets/pics/github-mark-white_h30.png" alt="GitHub logo">
-                        </button>
-                    </div>
-                </form>
-
-
-            </div>
-            <div class="col-12 col-md-6 vh-100 bg-success-subtle py-5 overflow-auto">
-                <h2>Sign up!</h2>
-                <form class="mx-auto" style="max-width: 360px;">
-                    <hr>
-                    <h3>Registration form</h3>
-
-                    <!-- username text comp -->
-                    <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text px-2 w-25" id="username-add1">User name*</span>
-                        <input type="text" id="regUName" class="form-control" placeholder="user name..."
-                            aria-label="User name" aria-describedby="username-add1">
-                        <div id="regUNameWarn" class="w-100 invisible text-danger lh-1" style="height: 2.1rem;">
-                            "Mandatory field! The username must be at least 3 characters long!"
-                        </div>
-                    </div>
-
-                    <!-- e-mail comp -->
-                    <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text px-2 w-25 " id="email-add2">E-mail*</span>
-                        <input type="email" id="regEmail" class="form-control " placeholder="e-mail address..."
-                            aria-label="Email" aria-describedby="email-add2">
-                        <div id="regEmailWarn" class="w-100 invisible text-danger lh-1" style="height: 2.1rem;">
-                            "Incorrect e-mail format!"
-                        </div>
-                    </div>
-
-                    <!-- password comp -->
-                    <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text px-2 w-25" id="password-enter2">Password*</span>
-                        <input type="password" id="regPass1" class="form-control" placeholder="password..."
-                            aria-label="Password" aria-describedby="password-enter2">
-                        <div id="regPass1Warn" class="w-100 invisible text-danger lh-1" style="height: 2.1rem;">
-                            "Incorrect password format! Password must be at least 6 characters long!"
-                        </div>
-                    </div>
-
-                    <!-- password comp -->
-                    <div class="input-group input-group-sm mb-3">
-                        <span class="input-group-text px-2" id="password-enter3">Confirm password*</span>
-                        <input type="password" id="regPass2" class="form-control" placeholder="password..."
-                            aria-label="Password" aria-describedby="password-enter3">
-                        <div id="regPass2Warn" class="w-100 invisible text-danger lh-1" style="height: 2.1rem;">
-                            "The Passwords entered do not match!"
-                        </div>
-                    </div>
-
-                    <!-- registrationButton comp -->
-                    <button type="button" id="regBtn" class="btn btn-primary btn-sm disabled">
-                        Registration
+                <h3 class="mb-4">Login with a profile:</h3>
+                <div class="d-inline-block" style="max-width: 220px;">
+                    <!-- FB button -->
+                    <button
+                            type="button"
+                            id="FbBtn"
+                            class="btn btn-primary btn-sm rounded-circle text-start p-1 mx-3 mb-3"
+                            aria-label="Log in with Facebook"
+                            title="Log in with Facebook"
+                            data-bs-toggle="tooltip"
+                    >
+                        <img src="./assets/pics/Facebook-logo-w30-circle.png"
+                             alt="" role="presentation" aria-hidden="true">
                     </button>
-                    <hr>
-                </form>
-            </div>
-        </div>
-    </div>
+                    <!-- Google button -->
+                    <button type="button" id="GooBtn"
+                            class="btn btn-primary btn-sm rounded-circle text-start p-1 mx-3 mb-3"
+                            aria-label="Log in with Google"
+                            title="Log in with Google"
+                            data-bs-toggle="tooltip"
+                    >
+                        <img src="./assets/pics/Google__G__Logo_wb_h30.png"
+                             alt="" role="presentation" aria-hidden="true">
+                    </button>
+                    <!-- GitHub button -->
+                    <button type="button" id="GitBtn"
+                            class="btn btn-dark btn-sm rounded-circle text-start p-1 mx-3 mb-3"
+                            aria-label="Log in with GitHub"
+                            title="Log in with GitHub"
+                            data-bs-toggle="tooltip"
+                    >
+                        <img src="./assets/pics/github-mark-white_h30.png"
+                             alt="" role="presentation" aria-hidden="true">
+                    </button>
+                </div>
+            </form>
+        </section>
+        <section aria-labelledby="signupSection" class="col-12 col-md-6 vh-100 bg-success-subtle py-5 overflow-auto">
+            <h2 id="signupSection">Sign up!</h2>
+            <form class="mx-auto" style="max-width: 360px;">
+                <hr>
+                <h3>Registration form</h3>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+                <!-- username text comp -->
+                <div class="input-group input-group-sm mb-3">
+                    <label class="input-group-text px-2 w-25" id="username-add1" for="regUName">User name*</label>
+                    <input type="text"
+                           name="register-username"
+                           id="regUName"
+                           class="form-control"
+                           placeholder="e.g. John"
+                           aria-label="Username (for registration)"
+                           aria-describedby="username-add1 regUNameWarn"
+                           required
+                    >
+                    <div id="regUNameWarn"
+                         class="w-100 invisible text-danger lh-1"
+                         style="height: 2.1rem;"
+                         aria-live="assertive"
+                    >Mandatory field! The username must be at least 3 characters long!
+                    </div>
+                </div>
+
+                <!-- e-mail comp -->
+                <div class="input-group input-group-sm mb-3">
+                    <label class="input-group-text px-2 w-25 " id="email-add2" for="regEmail">E-mail*</label>
+                    <input type="email"
+                           name="register-email"
+                           id="regEmail"
+                           class="form-control"
+                           placeholder="e.g. name@example.com"
+                           aria-label="Email address (for registration)"
+                           aria-describedby="email-add2 regEmailWarn"
+                           required
+                    >
+                    <div id="regEmailWarn"
+                         class="w-100 invisible text-danger lh-1"
+                         style="height: 2.1rem;"
+                         aria-live="assertive"
+                    >Incorrect e-mail format!
+                    </div>
+                </div>
+
+                <!-- password comp -->
+                <div class="input-group input-group-sm mb-3">
+                    <label class="input-group-text px-2 w-25" id="password-enter2" for="regPass1">Password*</label>
+                    <input type="password"
+                           name="register-password"
+                           id="regPass1"
+                           class="form-control"
+                           placeholder="At least 6 characters"
+                           aria-label="Password (for registration)"
+                           aria-describedby="password-enter2 regPass1Warn"
+                           required
+                           autocomplete="new-password"
+                    >
+                    <div id="regPass1Warn"
+                         class="w-100 invisible text-danger lh-1"
+                         style="height: 2.1rem;"
+                         aria-live="assertive"
+                    >Incorrect password format! Password must be at least six characters long!
+                    </div>
+                </div>
+
+                <!-- password comp -->
+                <div class="input-group input-group-sm mb-3">
+                    <label class="input-group-text px-2" id="password-enter3" for="regPass2">Confirm password*</label>
+                    <input type="password"
+                           id="regPass2"
+                           class="form-control"
+                           placeholder="Type the same you gave above"
+                           aria-label="Confirm password (for registration)"
+                           aria-describedby="password-enter3 regPass2Warn"
+                           required
+                           autocomplete="new-password"
+                    >
+                    <div id="regPass2Warn"
+                         class="w-100 invisible text-danger lh-1"
+                         style="height: 2.1rem;"
+                         aria-live="assertive"
+                    >The passwords entered do not match!
+                    </div>
+                </div>
+
+                <!-- registrationButton comp -->
+                <button type="button" id="regBtn" class="btn btn-sm btn-primary disabled" aria-disabled="true">
+                    Registration
+                </button>
+                <hr>
+            </form>
+        </section>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
 

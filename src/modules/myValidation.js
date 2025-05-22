@@ -57,10 +57,12 @@ export const regValidation = function () {
 
         enableRegBtn: function () {
             regBtn.classList.remove("disabled");
+            regBtn.removeAttribute("aria-disabled");
         },
 
         disableRegBtn: function () {
             regBtn.classList.add("disabled");
+            regBtn.setAttribute("aria-disabled", "true");
         },
 
         sha512: async function (str) {
@@ -81,6 +83,7 @@ export const regValidation = function () {
 
         showWarnText: function (inp) {
             inp.classList.add("is-invalid")
+            inp.setAttribute("aria-invalid", "true");
             if (inp.id === "logEmail" || inp.id === "logPassword") {
                 if (window.logEmail.value === "" || window.logPassword.value === "") {
                     window.logWarn.classList.remove("invisible")
@@ -92,6 +95,7 @@ export const regValidation = function () {
 
         hideWarnText: function (inp) {
             inp.classList.remove("is-invalid");
+            inp.removeAttribute("aria-invalid");
             if (inp.id === "logEmail" || inp.id === "logPassword") {                
                 if (window.logEmail.value !== "" && window.logPassword.value !== "") {
                     window.logWarn.classList.add("invisible")
