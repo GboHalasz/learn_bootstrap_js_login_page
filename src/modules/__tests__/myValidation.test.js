@@ -1,5 +1,6 @@
 import {regValidation} from '../myValidation';
-import { TextEncoder } from 'util';
+import {TextEncoder} from 'util';
+
 global.TextEncoder = TextEncoder;
 let validation;
 
@@ -25,7 +26,9 @@ beforeEach(() => {
             add: jest.fn(),
             remove: jest.fn()
         },
-        addEventListener: jest.fn()
+        addEventListener: jest.fn(),
+        removeAttribute: jest.fn(),
+        setAttribute: jest.fn(),
     };
 
     const mockDigest = jest.fn(() => {
@@ -33,10 +36,10 @@ beforeEach(() => {
         return Promise.resolve(mockBuffer);
     });
 
-    const mockSubtle = { digest: mockDigest };
+    const mockSubtle = {digest: mockDigest};
 
     Object.defineProperty(globalThis, 'crypto', {
-        value: { subtle: mockSubtle },
+        value: {subtle: mockSubtle},
         configurable: true
     });
 
@@ -71,7 +74,10 @@ describe('Field value handling and hashing', () => {
             id: 'regPass1',
             value: 'mypassword',
             type: 'password',
-            classList: {add: jest.fn(), remove: jest.fn()}
+            classList: {
+                add: jest.fn(), remove: jest.fn()},
+            removeAttribute: jest.fn(),
+            setAttribute: jest.fn()
         };
         await validation.setValueFromInp(inp);
         const val = validation.inpFieldsById.regPass1.value;
@@ -85,7 +91,9 @@ describe('Field value handling and hashing', () => {
             id: 'regUName',
             value: 'JohnDoe',
             type: 'text',
-            classList: {add: jest.fn(), remove: jest.fn()}
+            classList: {add: jest.fn(), remove: jest.fn()},
+            removeAttribute: jest.fn(),
+            setAttribute: jest.fn()
         };
         await validation.setValueFromInp(inp);
         expect(validation.inpFieldsById.regUName.value).toBe('JohnDoe');
@@ -140,7 +148,9 @@ describe('Error handling in checkField()', () => {
         const inp = {
             id: 'regUName',
             value: '',
-            classList: {add: jest.fn(), remove: jest.fn()}
+            classList: {add: jest.fn(), remove: jest.fn()},
+            removeAttribute: jest.fn(),
+            setAttribute: jest.fn(),
         };
         const result = validation.checkField(inp);
         expect(result).toBe('');
@@ -151,7 +161,9 @@ describe('Error handling in checkField()', () => {
         const inp = {
             id: 'regUName',
             value: 'ab',
-            classList: {add: jest.fn(), remove: jest.fn()}
+            classList: {add: jest.fn(), remove: jest.fn()},
+            removeAttribute: jest.fn(),
+            setAttribute: jest.fn()
         };
         const result = validation.checkField(inp);
         expect(result).toBe('');
