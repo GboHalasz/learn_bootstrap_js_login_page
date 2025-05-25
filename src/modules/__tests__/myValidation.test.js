@@ -77,7 +77,8 @@ describe('Field value handling and hashing', () => {
             classList: {
                 add: jest.fn(), remove: jest.fn()},
             removeAttribute: jest.fn(),
-            setAttribute: jest.fn()
+            setAttribute: jest.fn(),
+            focus: jest.fn()
         };
         await validation.setValueFromInp(inp);
         const val = validation.inpFieldsById.regPass1.value;
@@ -93,7 +94,8 @@ describe('Field value handling and hashing', () => {
             type: 'text',
             classList: {add: jest.fn(), remove: jest.fn()},
             removeAttribute: jest.fn(),
-            setAttribute: jest.fn()
+            setAttribute: jest.fn(),
+            focus: jest.fn()
         };
         await validation.setValueFromInp(inp);
         expect(validation.inpFieldsById.regUName.value).toBe('JohnDoe');
@@ -149,8 +151,12 @@ describe('Error handling in checkField()', () => {
             id: 'regUName',
             value: '',
             classList: {add: jest.fn(), remove: jest.fn()},
+            dataset: {
+                error: 'invalid',
+            },
             removeAttribute: jest.fn(),
             setAttribute: jest.fn(),
+            focus: jest.fn()
         };
         const result = validation.checkField(inp);
         expect(result).toBe('');
@@ -162,10 +168,15 @@ describe('Error handling in checkField()', () => {
             id: 'regUName',
             value: 'ab',
             classList: {add: jest.fn(), remove: jest.fn()},
+            dataset: {
+                error: 'invalid',
+            },
             removeAttribute: jest.fn(),
-            setAttribute: jest.fn()
+            setAttribute: jest.fn(),
+            focus: jest.fn()
         };
         const result = validation.checkField(inp);
+        expect(inp.classList.add).toHaveBeenCalledWith('is-invalid');
         expect(result).toBe('');
     });
 });
