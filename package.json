@@ -1,6 +1,6 @@
 {
   "name": "learn_bootstrap_js_login_page",
-  "version": "1.0.1-SNAPSHOT",
+  "version": "1.0.1",
   "main": "main.js",
   "scripts": {
     "test": "jest --coverage",
