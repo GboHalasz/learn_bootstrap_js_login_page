@@ -1,7 +1,6 @@
 /* Login - Registration page validation JS */
 
 //the browser extracts the input element by id!!
-
 class MyFormError extends Error {
     constructor(...params) {
         super(...params);
@@ -32,7 +31,7 @@ export const regValidation = function () {
                 storageName: "password",
                 value: "",
                 isValid: function (val) {
-                    regPass2.value = "";                     //these are for the case when  
+                    regPass2.value = "";                     //these are for the case when
                     myRegForm.inpFieldsById.regPass2.value = ""  //confirm password was given first
                     return val && (val.length >= 6);
                 }
@@ -75,7 +74,7 @@ export const regValidation = function () {
 
         setValueFromInp: async function (inp) {
             let validData = this.checkField(inp);
-            if (inp.type == "password" && validData) {
+            if (inp.type === "password" && validData) {
                 await this.sha512(validData).then(x => {
                     this.inpFieldsById[inp.id].value = x
                 });
