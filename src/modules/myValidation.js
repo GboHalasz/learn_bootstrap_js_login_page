@@ -45,14 +45,24 @@ export const regValidation = function () {
             logEmail: {
                 value: "",
                 isValid: function (val) {
-                    return val ? true : false
+                    return !!val
                 }
             },
             logPassword: {
                 value: "",
                 isValid: function (val) {
-                    return val ? true : false
+                    return !!val
                 }
+            }
+        },
+
+        registerBtnCallback: null,
+
+        setRegisterBtnCallback: function (callbackFn) {
+            if (typeof callbackFn == "function") {
+                this.registerBtnCallback = callbackFn;
+            } else {
+                throw new Error("Not a function!");
             }
         },
 
@@ -156,22 +166,6 @@ export const regValidation = function () {
             }
         },
 
-        addListenerToFields: function (ev) {
-            try {
-                if (Object.keys(this.inpFieldsById).length !== 0) {
-                    for (const field in this.inpFieldsById) {
-                        window[field].addEventListener(ev, async function () {
-                            await myRegForm.setValueFromInp(this);
-                            myRegForm.regValuesAreReady() ? myRegForm.enableRegBtn() : myRegForm.disableRegBtn();
-                        })
-                    }
-                }
-
-            } catch (err) {
-                console.error(`${err.name}: ${err.message}`);
-            }
-        },
-
         dataToJson: function () {
             let user = {};
             try {
@@ -189,20 +183,47 @@ export const regValidation = function () {
             }
         },
 
-        addListenerToRegBtn: function (cfn) {
-            regBtn.addEventListener("click", function () {
-                cfn();
+        handleRegBtnClick: function () {
+            if (myRegForm.regValuesAreReady()) {
+                myRegForm.registerBtnCallback();
                 myRegForm.resetFields();
                 myRegForm.resetValues();
                 myRegForm.disableRegBtn();
-            })
-            return cfn;
+            } else {
+                throw new Error("Input validation logic broken!");
+            }
         },
 
-        startValidation: function (ev, cfn) {
-            myRegForm.addListenerToFields(ev);
-            myRegForm.addListenerToRegBtn(cfn);
-        }
+        addListenerToRegBtn: function () {
+            regBtn.addEventListener("click", this.handleRegBtnClick)
+        },
+
+        removeListenerToRegBtn: function () {
+            regBtn.removeEventListener("click", this.handleRegBtnClick )
+        },
+
+        startValidation: function (event, regBtnCallback) {
+            try {
+                this.setRegisterBtnCallback(regBtnCallback)
+                if (Object.keys(this.inpFieldsById).length !== 0) {
+                    for (const field in this.inpFieldsById) {
+                        window[field].addEventListener(event, async function () {
+                            await myRegForm.setValueFromInp(this);
+                            if (myRegForm.regValuesAreReady()) {
+                                myRegForm.addListenerToRegBtn();
+                                myRegForm.enableRegBtn();
+                            } else {
+                                myRegForm.disableRegBtn();
+                                myRegForm.removeListenerToRegBtn();
+                            }
+                        })
+                    }
+                }
+
+            } catch (err) {
+                console.error(`${err.name}: ${err.message}`);
+            }
+        },
     }
 
     return myRegForm
