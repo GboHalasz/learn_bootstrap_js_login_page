@@ -2,7 +2,7 @@ import {regValidation} from '../myValidation';
 import {TextEncoder} from 'util';
 
 global.TextEncoder = TextEncoder;
-let validation;
+let myRegFormObject;
 
 beforeEach(() => {
     // Mock DOM elements
@@ -27,6 +27,7 @@ beforeEach(() => {
             remove: jest.fn()
         },
         addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
         removeAttribute: jest.fn(),
         setAttribute: jest.fn(),
     };
@@ -43,28 +44,27 @@ beforeEach(() => {
         configurable: true
     });
 
-    validation = regValidation();
+    myRegFormObject= regValidation();
 });
 
 describe('Validation logic', () => {
     test('Username must be at least 3 characters', () => {
-        const uname = validation.inpFieldsById.regUName;
+        const uname = myRegFormObject.inpFieldsById.regUName;
         expect(uname.isValid('ab')).toBe(false);
         expect(uname.isValid('abc')).toBe(true);
     });
 
     test('Email regex should validate properly', () => {
-        const email = validation.inpFieldsById.regEmail;
+        const email = myRegFormObject.inpFieldsById.regEmail;
         expect(email.isValid('notanemail')).toBe(false);
         expect(email.isValid('test@example.com')).toBe(true);
     });
 
     test('Password confirmation must match', () => {
-        const form = regValidation();
         window.regPass1.value = 'securepass';
         window.regPass1.type = 'password';
-        expect(form.inpFieldsById.regPass2.isValid('securepass')).toBe(true);
-        expect(form.inpFieldsById.regPass2.isValid('wrongpass')).toBe(false);
+        expect(myRegFormObject.inpFieldsById.regPass2.isValid('securepass')).toBe(true);
+        expect(myRegFormObject.inpFieldsById.regPass2.isValid('wrongpass')).toBe(false);
     });
 });
 
@@ -80,8 +80,8 @@ describe('Field value handling and hashing', () => {
             setAttribute: jest.fn(),
             focus: jest.fn()
         };
-        await validation.setValueFromInp(inp);
-        const val = validation.inpFieldsById.regPass1.value;
+        await myRegFormObject.setValueFromInp(inp);
+        const val = myRegFormObject.inpFieldsById.regPass1.value;
         expect(typeof val).toBe('string');
         expect(val).not.toBe('mypassword');
         expect(val.length).toBe(128); // SHA-512 hex length
@@ -97,14 +97,14 @@ describe('Field value handling and hashing', () => {
             setAttribute: jest.fn(),
             focus: jest.fn()
         };
-        await validation.setValueFromInp(inp);
-        expect(validation.inpFieldsById.regUName.value).toBe('JohnDoe');
+        await myRegFormObject.setValueFromInp(inp);
+        expect(myRegFormObject.inpFieldsById.regUName.value).toBe('JohnDoe');
     });
 });
 
 describe('Form data and state', () => {
     test('dataToJson includes only fields with storageName', () => {
-        const data = validation;
+        const data = myRegFormObject;
         data.inpFieldsById.regUName.value = 'Alice';
         data.inpFieldsById.regEmail.value = 'alice@example.com';
         data.inpFieldsById.regPass1.value = 'hashedpass';
@@ -117,7 +117,7 @@ describe('Form data and state', () => {
     });
 
     test('resetValues sets all values to empty strings', () => {
-        const data = validation;
+        const data = myRegFormObject;
         data.inpFieldsById.regUName.value = 'filled';
         data.resetValues();
         expect(data.inpFieldsById.regUName.value).toBe('');
@@ -125,18 +125,18 @@ describe('Form data and state', () => {
 
     test('resetFields clears DOM field values', () => {
         window.regUName.value = 'some input';
-        validation.resetFields();
+        myRegFormObject.resetFields();
         expect(window.regUName.value).toBe('');
     });
 
     test('regValuesAreReady returns false if any reg field is missing', () => {
-        validation.inpFieldsById.regUName.value = 'John';
-        validation.inpFieldsById.regEmail.value = '';
-        expect(validation.regValuesAreReady()).toBe(false);
+        myRegFormObject.inpFieldsById.regUName.value = 'John';
+        myRegFormObject.inpFieldsById.regEmail.value = '';
+        expect(myRegFormObject.regValuesAreReady()).toBe(false);
     });
 
     test('regValuesAreReady returns true if all reg fields have values', () => {
-        const data = validation;
+        const data = myRegFormObject;
         data.inpFieldsById.regUName.value = 'User';
         data.inpFieldsById.regEmail.value = 'test@example.com';
         data.inpFieldsById.regPass1.value = 'pass1';
@@ -158,7 +158,7 @@ describe('Error handling in checkField()', () => {
             setAttribute: jest.fn(),
             focus: jest.fn()
         };
-        const result = validation.checkField(inp);
+        const result = myRegFormObject.checkField(inp);
         expect(result).toBe('');
         expect(inp.classList.add).toHaveBeenCalledWith('is-invalid');
     });
@@ -175,38 +175,78 @@ describe('Error handling in checkField()', () => {
             setAttribute: jest.fn(),
             focus: jest.fn()
         };
-        const result = validation.checkField(inp);
+        const result = myRegFormObject.checkField(inp);
         expect(inp.classList.add).toHaveBeenCalledWith('is-invalid');
         expect(result).toBe('');
     });
 });
 describe('Adding listeners', () => {
-    test('addListenerToFields adds event listener to each input', () => {
+    test('startValidation set registerBtnCallback and adds event listener to each input', () => {
+        const mockCallback = jest.fn();
         const form = regValidation();
-        form.addListenerToFields('focusout');
+        form.startValidation('focusout', mockCallback);
 
+        expect(form.registerBtnCallback).toEqual(mockCallback);
         for (const field in form.inpFieldsById) {
             expect(window[field].addEventListener).toHaveBeenCalledWith('focusout', expect.any(Function));
         }
     });
-    test('addListenerToRegBtn registers click and triggers expected actions', () => {
-        const form = regValidation();
+    test('addListenerToRegBtn registers click and triggers expected actions when validation passes', () => {
 
-        const mockCallback = jest.fn();
-        form.resetFields = jest.fn();
-        form.resetValues = jest.fn();
-        form.disableRegBtn = jest.fn();
+        myRegFormObject.registerBtnCallback = jest.fn();
+        myRegFormObject.resetFields = jest.fn();
+        myRegFormObject.resetValues = jest.fn();
+        myRegFormObject.disableRegBtn = jest.fn();
+        myRegFormObject.regValuesAreReady = jest.fn().mockReturnValue(true);
 
-        form.addListenerToRegBtn(mockCallback);
+        myRegFormObject.addListenerToRegBtn();
 
 
         const clickHandler = regBtn.addEventListener.mock.calls.find(call => call[0] === 'click')[1];
         clickHandler();
 
-        expect(mockCallback).toHaveBeenCalled();
-        expect(form.resetFields).toHaveBeenCalled();
-        expect(form.resetValues).toHaveBeenCalled();
-        expect(form.disableRegBtn).toHaveBeenCalled();
+        expect(myRegFormObject.registerBtnCallback).toHaveBeenCalled();
+        expect(myRegFormObject.resetFields).toHaveBeenCalled();
+        expect(myRegFormObject.resetValues).toHaveBeenCalled();
+        expect(myRegFormObject.disableRegBtn).toHaveBeenCalled();
+    });
+    test('addListenerToRegBtn throws error when validation fails', () => {
+
+        myRegFormObject.regValuesAreReady = jest.fn().mockReturnValue(false);
+
+        myRegFormObject.addListenerToRegBtn();
+
+        const clickHandler = regBtn.addEventListener.mock.calls.find(call => call[0] === 'click')[1];
+
+        expect(() => clickHandler()).toThrow("Input validation logic broken!");
+    });
+});
+describe('Remove listeners', () => {
+    test('removeListenerToRegBtn correctly removes click handler', () => {
+        myRegFormObject.handleRegBtnClick = jest.fn();
+
+        const clickHandlers = {};
+
+        regBtn.addEventListener.mockImplementation((event, cb) => {
+            clickHandlers[event] = cb;
+        });
+
+        regBtn.removeEventListener.mockImplementation((event, cb) => {
+            // remove if the callback is the same
+            if (clickHandlers[event] === cb) {
+                delete clickHandlers[event];
+            }
+        });
+
+        myRegFormObject.addListenerToRegBtn();
+
+        myRegFormObject.removeListenerToRegBtn();
+
+        if (clickHandlers['click']) {
+            clickHandlers['click']();
+        }
+
+        expect(myRegFormObject.handleRegBtnClick).not.toHaveBeenCalled();
     });
 });
 describe('Registration button state control', () => {
